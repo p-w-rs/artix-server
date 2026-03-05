@@ -1,0 +1,4 @@
+wget https://us.download.nvidia.com/XFree86/Linux-x86_64/590.48.01/NVIDIA-Linux-x86_64-590.48.01.run
+wget https://developer.download.nvidia.com/compute/cuda/13.1.1/local_installers/cuda_13.1.1_590.48.01_linux.run
+https://github.com/NVIDIA/open-gpu-kernel-modules.git
+git checkout 590.48.01
