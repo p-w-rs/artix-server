@@ -6,6 +6,7 @@
 source (dirname (status filename))/die.fish
 
 echo "=== System Configuration ==="
+ln -sf /usr/bin/helix /opt/bin/hx
 
 echo ">>> Generating locale + clock..."
 ln -sf /usr/share/zoneinfo/America/Boise /etc/localtime
