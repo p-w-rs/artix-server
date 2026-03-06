@@ -1,0 +1,82 @@
+#!/usr/bin/env fish
+# update-sozu — Install or update sōzu HTTP reverse proxy
+#
+# Builds from source using cargo and links the sozu runit service.
+# Config lives at /etc/sozu/config.toml (pre-seeded by the ISO).
+#
+# sozu:  /opt/sozu/target/release/sozu  → /opt/bin/sozu
+
+set SOZU_DIR     /opt/sozu
+set BIN_DIR      /opt/bin
+set SERVICE_SRC  /etc/sv/sozu
+set SERVICE_LINK /var/service/sozu
+
+if test (id -u) -ne 0
+    echo "ERROR: update-sozu must be run as root (use sudo)."
+    exit 1
+end
+
+# ─────────────────────────────────────────
+#  Source
+# ─────────────────────────────────────────
+
+echo "=== sōzu ==="
+
+if test -d $SOZU_DIR/.git
+    echo "  Updating existing clone..."
+    git -C $SOZU_DIR pull --ff-only
+else
+    echo "  Cloning sozu..."
+    git clone https://github.com/sozu-proxy/sozu $SOZU_DIR
+end
+
+# ─────────────────────────────────────────
+#  Build
+# ─────────────────────────────────────────
+
+echo "  Building (cargo build --release)..."
+cargo build --release --locked --manifest-path $SOZU_DIR/Cargo.toml
+
+ln -sf $SOZU_DIR/target/release/sozu $BIN_DIR/sozu
+echo "  Symlinked: $BIN_DIR/sozu → $SOZU_DIR/target/release/sozu"
+
+# ─────────────────────────────────────────
+#  Config directory
+# ─────────────────────────────────────────
+
+mkdir -p /etc/sozu /run/sozu /var/lib/sozu
+
+if not test -f /etc/sozu/config.toml
+    echo "  WARNING: /etc/sozu/config.toml not found."
+    echo "  The file should have been seeded by the ISO — check custom-files/etc/sozu/."
+end
+
+# ─────────────────────────────────────────
+#  runit service
+# ─────────────────────────────────────────
+
+echo ""
+echo "=== Service ==="
+
+if test -L $SERVICE_LINK
+    echo "  sozu service already enabled."
+else if test -d $SERVICE_SRC
+    ln -s $SERVICE_SRC $SERVICE_LINK
+    echo "  Enabled: sozu → $SERVICE_LINK"
+else
+    echo "  WARNING: $SERVICE_SRC not found — service not enabled."
+    echo "  Ensure /etc/sv/sozu/run exists, then: ln -s /etc/sv/sozu /var/service/"
+end
+
+# ─────────────────────────────────────────
+#  Done
+# ─────────────────────────────────────────
+
+echo ""
+echo "=== Done ==="
+echo "  sozu:    "(which sozu)
+echo "  config:  /etc/sozu/config.toml"
+echo "  service: sv status sozu"
+echo ""
+echo "  Edit /etc/sozu/config.toml then: sv restart sozu"
+echo "  Run 'sudo update-sozu' at any time to update."
