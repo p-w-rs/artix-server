@@ -1,0 +1,63 @@
+# /etc/sozu/config.toml — sōzu reverse proxy configuration
+# Docs: https://github.com/sozu-proxy/sozu/blob/main/doc/configure.md
+#
+# After editing: dinitctl restart sozu
+# CLI:           sozu --config /etc/sozu/config.toml <command>
+
+# ─────────────────────────────────────────
+#  Global
+# ─────────────────────────────────────────
+
+# Unix socket used by the sozu CLI and for dynamic configuration.
+command_socket = "/run/sozu/sock"
+
+# Optional: persist routing state so clusters survive restarts.
+# Generate/update with: sozu --config /etc/sozu/config.toml state save --file /var/lib/sozu/state.json
+# saved_state = "/var/lib/sozu/state.json"
+
+log_level  = "info"
+log_target = "stdout"
+
+# Number of worker processes (1 per CPU core is a good starting point).
+worker_count = 2
+
+max_connections    = 1000
+max_buffers        = 1000
+buffer_size        = 16384
+activate_listeners = true
+
+# ─────────────────────────────────────────
+#  Listeners
+# ─────────────────────────────────────────
+
+[[listeners]]
+protocol = "http"
+address  = "0.0.0.0:80"
+
+# Uncomment and supply certificates to enable HTTPS.
+# [[listeners]]
+# protocol          = "https"
+# address           = "0.0.0.0:443"
+# tls_versions      = ["TLSv1.2", "TLSv1.3"]
+# certificate       = "/etc/sozu/certs/fullchain.pem"
+# key               = "/etc/sozu/certs/privkey.pem"
+# certificate_chain = "/etc/sozu/certs/chain.pem"
+
+# ─────────────────────────────────────────
+#  Clusters
+# ─────────────────────────────────────────
+# Each cluster defines a named application with one or more frontends
+# (hostname + listener binding) and one or more backends (upstream servers).
+#
+# Uncomment and duplicate this block for each application.
+# [clusters.MyApp]
+# protocol       = "http"
+# load_balancing = "ROUND_ROBIN"   # ROUND_ROBIN | RANDOM | LEAST_LOADED | POWER_OF_TWO
+#
+# [[clusters.MyApp.frontends]]
+# address  = "0.0.0.0:80"
+# hostname = "myapp.example.com"
+#
+# [[clusters.MyApp.backends]]
+# backend_id = "myapp-1"
+# address    = "127.0.0.1:3000"

@@ -1,15 +1,15 @@
 #!/usr/bin/env fish
 # update-sozu — Install or update sōzu HTTP reverse proxy
 #
-# Builds from source using cargo and links the sozu runit service.
+# Builds from source using cargo and links the sozu dinit service.
 # Config lives at /etc/sozu/config.toml (pre-seeded by the ISO).
 #
 # sozu:  /opt/sozu/target/release/sozu  → /opt/bin/sozu
 
-set SOZU_DIR     /opt/sozu
-set BIN_DIR      /opt/bin
-set SERVICE_SRC  /etc/sv/sozu
-set SERVICE_LINK /var/service/sozu
+set SOZU_DIR    /opt/sozu
+set BIN_DIR     /opt/bin
+set SERVICE_SRC /etc/dinit.d/sozu
+set BOOT_DIR    /etc/dinit.d/boot.d
 
 if test (id -u) -ne 0
     echo "ERROR: update-sozu must be run as root (use sudo)."
@@ -48,24 +48,24 @@ mkdir -p /etc/sozu /run/sozu /var/lib/sozu
 
 if not test -f /etc/sozu/config.toml
     echo "  WARNING: /etc/sozu/config.toml not found."
-    echo "  The file should have been seeded by the ISO — check custom-files/etc/sozu/."
+    echo "  The file should have been seeded by the ISO — check mnt/etc/sozu/."
 end
 
 # ─────────────────────────────────────────
-#  runit service
+#  dinit service
 # ─────────────────────────────────────────
 
 echo ""
 echo "=== Service ==="
 
-if test -L $SERVICE_LINK
-    echo "  sozu service already enabled."
-else if test -d $SERVICE_SRC
-    ln -s $SERVICE_SRC $SERVICE_LINK
-    echo "  Enabled: sozu → $SERVICE_LINK"
-else
+if not test -f $SERVICE_SRC
     echo "  WARNING: $SERVICE_SRC not found — service not enabled."
-    echo "  Ensure /etc/sv/sozu/run exists, then: ln -s /etc/sv/sozu /var/service/"
+    echo "  Create a dinit service file at $SERVICE_SRC, then re-run."
+else if test -L $BOOT_DIR/sozu
+    echo "  sozu service already enabled."
+else
+    ln -s $SERVICE_SRC $BOOT_DIR/sozu
+    echo "  Enabled: $BOOT_DIR/sozu → $SERVICE_SRC"
 end
 
 # ─────────────────────────────────────────
@@ -76,7 +76,7 @@ echo ""
 echo "=== Done ==="
 echo "  sozu:    "(which sozu)
 echo "  config:  /etc/sozu/config.toml"
-echo "  service: sv status sozu"
+echo "  status:  dinitctl status sozu"
 echo ""
-echo "  Edit /etc/sozu/config.toml then: sv restart sozu"
+echo "  Edit /etc/sozu/config.toml then: dinitctl restart sozu"
 echo "  Run 'sudo update-sozu' at any time to update."
