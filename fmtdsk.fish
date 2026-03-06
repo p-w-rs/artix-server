@@ -1,44 +1,33 @@
 #!/usr/bin/env fish
 
-# fmtdisk.fish — partition and format a physical disk for Void Linux.
-# Writes GPT (EFI + swap + root), formats all three.
-# DESTRUCTIVE — requires typing the device name to confirm.
-#
-# Usage: ./fmtdisk.fish /dev/sda
-# To adjust partition sizes, edit the variables below.
+# Partition and format a physical disk. DESTRUCTIVE.
+# Writes GPT (EFI + swap + root) and formats all three.
+# Usage: ./fmtdsk.fish /dev/sda
 
 source (dirname (status filename))/helpers/die.fish
 
-# ── Configuration ─────────────────────────────────────────────────────────────
+# ── Config ────────────────────────────────────────────────────────────────────
 set EFI_SIZE  100M
 set SWAP_SIZE 8G
 
-# ── Argument + safety check ───────────────────────────────────────────────────
+# ── Args + safety check ───────────────────────────────────────────────────────
 test (count $argv) -eq 1; or die "Usage: "(status filename)" <disk>  e.g. /dev/sda"
 set DISK $argv[1]
 test -b $DISK; or die "'$DISK' is not a block device"
 
 echo "WARNING: This will DESTROY all data on $DISK"
 read -P "Type $DISK to confirm: " CONFIRM
-test "$CONFIRM" = "$DISK"; or die "Confirmation failed. Aborting."
+test "$CONFIRM" = "$DISK"; or die "Aborted."
 
 # ── Partition layout ──────────────────────────────────────────────────────────
-set MATH (dirname (status filename))/helpers/size-mb
-set EFI_MB  (run $MATH $EFI_SIZE)
-set SWAP_MB (run $MATH $SWAP_SIZE)
+set CALC (dirname (status filename))/helpers/mbcalc.fish
+set EFI_END  (math "1 + "(fish $CALC $EFI_SIZE))M
+set SWAP_END (math "1 + "(fish $CALC $EFI_SIZE)" + "(fish $CALC $SWAP_SIZE))M
 
-set EFI_END  (math "1 + $EFI_MB")M
-set SWAP_END (math "1 + $EFI_MB + $SWAP_MB")M
+string match -qr '(nvme|loop)' $DISK; and set P {$DISK}p; or set P $DISK
 
-# NVMe/loop devices use 'p' before the partition number (nvme0n1p1 vs sda1)
-if string match -qr '(nvme|loop)' $DISK
-    set P {$DISK}p
-else
-    set P $DISK
-end
-
-# ── Partition and format ───────────────────────────────────────────────────────
-echo "Partitioning $DISK..."
+# ── Partition + format ────────────────────────────────────────────────────────
+echo ">>> Partitioning $DISK..."
 run parted --script $DISK \
     mklabel gpt \
     mkpart EFI  fat32      1M       $EFI_END  \
@@ -48,7 +37,7 @@ run parted --script $DISK \
 
 sleep 1
 
-echo "Formatting partitions..."
+echo ">>> Formatting..."
 run mkfs.vfat -F32 -n EFI  {$P}1
 run mkswap    -L   swap    {$P}2
 run mkfs.ext4 -L   root    {$P}3

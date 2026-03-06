@@ -1,20 +1,14 @@
 #!/usr/bin/env fish
 
-function make_fish_executable -d "Make all .fish files executable recursively"
-    set -l target_directory $argv[1]
+# Make all .fish files in a directory tree executable.
+# Usage: mkexec.fish <directory>
 
-    if test -z "$target_directory"
-        echo "Usage: make_fish_executable <directory>"
-        return 1
-    end
+function make_fish_executable
+    test -n "$argv[1]"; or begin; echo "Usage: mkexec.fish <directory>"; return 1; end
+    test -d "$argv[1]"; or begin; echo "Error: '$argv[1]' is not a directory"; return 1; end
 
-    if not test -d "$target_directory"
-        echo "Error: Directory '$target_directory' does not exist."
-        return 1
-    end
-
-    for file in (find "$target_directory" -name "*.fish" -type f)
-        chmod +x "$file"
-        echo "Made executable: $file"
+    for f in (find $argv[1] -name "*.fish" -type f)
+        chmod +x $f
+        echo "  $f"
     end
 end

@@ -1,23 +1,14 @@
 #!/usr/bin/env fish
 
-# helpers/die.fish — source this at the top of any script to get:
-#
-#   die [message]   print message + exit 1
-#   run CMD…        run a command; on failure, print it and die
-#
-# Usage:
-#   source (dirname (status filename))/helpers/die.fish
-#   run parted ...
-#   run mkfs.ext4 ...
+# Provides two helpers for install scripts:
+#   die [msg]  — print error and exit 1
+#   run CMD…   — run a command; die on failure
 
 function die
-    set msg $argv
-    test -n "$msg"; or set msg "fatal error"
-    echo "ERROR: $msg" >&2
+    echo "ERROR: $argv" >&2
     exit 1
 end
 
 function run
-    $argv
-    or die "'$argv' failed"
+    $argv; or die "'$argv' failed"
 end

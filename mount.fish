@@ -1,8 +1,6 @@
 #!/usr/bin/env fish
 
-# mount.fish — mount a partitioned Linux disk under /mnt.
-# Mounts root → /mnt, EFI → /mnt/boot/efi, and enables swap.
-#
+# Mount a partitioned Linux disk under /mnt.
 # Usage: ./mount.fish <device>
 #   ./mount.fish /dev/loop0      (disk image)
 #   ./mount.fish /dev/sda        (SATA/SCSI)
@@ -13,19 +11,13 @@ source (dirname (status filename))/helpers/die.fish
 test (count $argv) -eq 1; or die "Usage: "(status filename)" <device>"
 set DEV $argv[1]
 
-# NVMe/loop devices use 'p' before the partition number
-if string match -qr '(nvme|loop)' $DEV
-    set P {$DEV}p
-else
-    set P $DEV
-end
+string match -qr '(nvme|loop)' $DEV; and set P {$DEV}p; or set P $DEV
 
-echo "Mounting $DEV → /mnt..."
-run mount      {$P}3 /mnt
-run mkdir -p   /mnt/boot/efi
-run mount      {$P}1 /mnt/boot/efi
-run swapon     {$P}2
+echo ">>> Mounting $DEV → /mnt..."
+run mount    {$P}3 /mnt
+run mkdir -p /mnt/boot/efi
+run mount    {$P}1 /mnt/boot/efi
+run swapon   {$P}2
 
 echo ""
-echo "Mounted. To unmount when finished:"
-echo "  swapoff {$P}2 && umount /mnt/boot/efi && umount /mnt"
+echo "Done. To unmount: swapoff {$P}2 && umount /mnt/boot/efi && umount /mnt"
