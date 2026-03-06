@@ -8,6 +8,7 @@
 set FISHER_FUNC /etc/fish/functions/fisher.fish
 set FISHER_URL  https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish
 set PLUGS \
+    edc/bass \
     kidonng/zoxide.fish \
     givensuman/fish-eza \
     PatrickF1/fzf.fish \

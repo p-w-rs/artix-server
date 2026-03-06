@@ -8,10 +8,12 @@ status is-interactive; or return
 # ── Greeting ──────────────────────────────────────────────────────────────────
 set -g fish_greeting ""
 
+# Source /etc/profile to pick up profile.d scripts
+bass source /etc/profile
+
 # ── PATH ──────────────────────────────────────────────────────────────────────
 # /opt/bin holds manually managed binaries (odin, ols, sozu, etc.)
-fish_add_path /opt/bin
-fish_add_path /usr/local/bin
+set -gx PATH /opt/bin $PATH
 
 # ── Editor / Pager ────────────────────────────────────────────────────────────
 set -gx EDITOR   helix
