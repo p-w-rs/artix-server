@@ -6,9 +6,9 @@ set -gx JULIA_NUM_THREADS auto                    # Use all available cores
 set -gx JULIA_EDITOR "hx"                       # Set your preferred editor
 set -gx JULIA_PKG_PRESERVE_TIERED_INSTALLED true  # Prevent accidental downgrades
 set -gx JULIA_PKG_USE_CLI_GIT true               # Use system git for packages
-set -gx JULIA_ERROR_COLOR "\033[91m"             # Red error messages
-set -gx JULIA_WARN_COLOR "\033[93m"              # Yellow warnings
-set -gx JULIA_INFO_COLOR "\033[36m"              # Cyan info messages
+set -gx JULIA_ERROR_COLOR "#fa5750"              # Selenized red
+set -gx JULIA_WARN_COLOR  "#dbb32d"              # Selenized yellow
+set -gx JULIA_INFO_COLOR  "#41c7b9"              # Selenized cyan
 
 # Python interop via PythonCall
 # JULIA_CONDAPKG_BACKEND "Null" — never let Julia manage Python itself.
