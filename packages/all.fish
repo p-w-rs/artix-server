@@ -12,6 +12,6 @@ for script in $DIR/*.fish
     source $script
 end
 
-echo "installing $BASE_PACKAGES $PACKAGES\n\n"
-
+echo "\n\n\nInstalling $BASE_PACKAGES $PACKAGES\n\n\n"
+exit 1
 basestrap /mnt $BASE_PACKAGES $PACKAGES
