@@ -1,3 +1,4 @@
 #!/usr/bin/env fish
 
 basestrap /mnt dbus dbus-dinit openssh openssh-dinit connman connman-dinit apparmor apparmor-dinit nftables nftables-dinit cronie cronie-dinit bluez bluez-dinit
+basestrap /mnt libnotify dunst
