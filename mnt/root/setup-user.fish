@@ -18,7 +18,7 @@ chmod 600 /etc/nftables.conf
 
 echo ">>> Clearing skel and root home..."
 rm -rf /etc/skel/.*  /etc/skel/*
-rm -rf /root/.*      /root/*
+rm -rf /root/.*
 
 echo ""
 echo ">>> Set ROOT password:"
