@@ -10,6 +10,8 @@ echo "=== System Configuration ==="
 
 echo ">>> Generating localtime..."
 ln -sf /usr/share/zoneinfo/America/Boise /etc/localtime
+hwclock --systohc
+locale-gen
 
 # Permissions that must be exact — enforce after the file copy
 echo ">>> Hardening permissions..."
@@ -33,5 +35,4 @@ run passwd $ADMIN_USER
 echo ""
 echo ">>> apply-config done."
 echo "    Hostname : "(cat /etc/hostname)
-echo "    Timezone : "(grep ^TIMEZONE /etc/rc.conf | cut -d'"' -f2)
 echo "    User     : $ADMIN_USER (wheel)"
