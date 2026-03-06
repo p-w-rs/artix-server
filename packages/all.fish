@@ -1,12 +1,15 @@
 #!/usr/bin/env fish
 
-# Run all package install scripts in order.
+# Install pakcages
 
 set DIR (dirname (status filename))
 
+set BASE_PACKAGES base base-devel dinit fish
+set PACKAGES linux linux-firmware linux-headers linux-firmware linux-firmware-intel linux-firmware-nvidia
+
 for script in $DIR/*.fish
     test (basename $script) = all.fish; and continue
-    chmod +x $script
-    echo ">>> Running $script..."
-    fish $script
+    source $script
 end
+
+basestrap /mnt $BASE_PACKAGES $PACKAGES
