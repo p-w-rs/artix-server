@@ -21,11 +21,11 @@ else
 end
 
 echo "Mounting $DEV → /mnt..."
-run doas mount      {$P}3 /mnt
-run doas mkdir -p   /mnt/boot/efi
-run doas mount      {$P}1 /mnt/boot/efi
-run doas swapon     {$P}2
+run mount      {$P}3 /mnt
+run mkdir -p   /mnt/boot/efi
+run mount      {$P}1 /mnt/boot/efi
+run swapon     {$P}2
 
 echo ""
 echo "Mounted. To unmount when finished:"
-echo "  doas swapoff {$P}2 && doas umount /mnt/boot/efi && doas umount /mnt"
+echo "  swapoff {$P}2 && umount /mnt/boot/efi && umount /mnt"

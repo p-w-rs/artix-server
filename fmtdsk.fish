@@ -1,0 +1,57 @@
+#!/usr/bin/env fish
+
+# fmtdisk.fish — partition and format a physical disk for Void Linux.
+# Writes GPT (EFI + swap + root), formats all three.
+# DESTRUCTIVE — requires typing the device name to confirm.
+#
+# Usage: ./fmtdisk.fish /dev/sda
+# To adjust partition sizes, edit the variables below.
+
+source (dirname (status filename))/helpers/die.fish
+
+# ── Configuration ─────────────────────────────────────────────────────────────
+set EFI_SIZE  100M
+set SWAP_SIZE 8G
+
+# ── Argument + safety check ───────────────────────────────────────────────────
+test (count $argv) -eq 1; or die "Usage: "(status filename)" <disk>  e.g. /dev/sda"
+set DISK $argv[1]
+test -b $DISK; or die "'$DISK' is not a block device"
+
+echo "WARNING: This will DESTROY all data on $DISK"
+read -P "Type $DISK to confirm: " CONFIRM
+test "$CONFIRM" = "$DISK"; or die "Confirmation failed. Aborting."
+
+# ── Partition layout ──────────────────────────────────────────────────────────
+set MATH (dirname (status filename))/helpers/size-mb
+set EFI_MB  (run $MATH $EFI_SIZE)
+set SWAP_MB (run $MATH $SWAP_SIZE)
+
+set EFI_END  (math "1 + $EFI_MB")M
+set SWAP_END (math "1 + $EFI_MB + $SWAP_MB")M
+
+# NVMe/loop devices use 'p' before the partition number (nvme0n1p1 vs sda1)
+if string match -qr '(nvme|loop)' $DISK
+    set P {$DISK}p
+else
+    set P $DISK
+end
+
+# ── Partition and format ───────────────────────────────────────────────────────
+echo "Partitioning $DISK..."
+run parted --script $DISK \
+    mklabel gpt \
+    mkpart EFI  fat32      1M       $EFI_END  \
+    mkpart swap linux-swap $EFI_END $SWAP_END \
+    mkpart root ext4       $SWAP_END 100%     \
+    set 1 esp on
+
+sleep 1
+
+echo "Formatting partitions..."
+run mkfs.vfat -F32 -n EFI  {$P}1
+run mkswap    -L   swap    {$P}2
+run mkfs.ext4 -L   root    {$P}3
+
+echo ""
+echo "Done. $DISK is partitioned and formatted."

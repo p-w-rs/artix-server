@@ -13,7 +13,7 @@ set CALC (dirname (status filename))/helpers/mbcalc.fish
 # ── Configuration ─────────────────────────────────────────────────────────────
 set IMG_FILE  linux.img
 set IMG_SIZE  64G
-set EFI_SIZE  1G
+set EFI_SIZE  100M
 set SWAP_SIZE 8G
 
 # ── Partition layout ──────────────────────────────────────────────────────────
@@ -29,14 +29,14 @@ echo "Creating $IMG_SIZE disk image: $IMG_FILE..."
 run truncate -s $IMG_SIZE $IMG_FILE
 
 echo "Attaching loop device..."
-set LOOP (doas losetup --find --partscan --show $IMG_FILE)
+set LOOP  (losetup --find --partscan --show $IMG_FILE)
 or die "losetup failed"
 echo "Loop device: $LOOP"
 
 # ── Partition and format ───────────────────────────────────────────────────────
 # Layout: 1M gap | EFI (FAT32) | swap | root (ext4, rest of disk)
 echo "Partitioning $LOOP..."
-run doas parted --script $LOOP \
+run parted --script $LOOP \
     mklabel gpt \
     mkpart EFI  fat32      $EFI_START $EFI_END  \
     mkpart swap linux-swap $EFI_END   $SWAP_END \
@@ -46,10 +46,10 @@ run doas parted --script $LOOP \
 sleep 1
 
 echo "Formatting partitions..."
-run doas mkfs.vfat -F32 -n EFI  {$LOOP}p1
-run doas mkswap    -L   swap    {$LOOP}p2
-run doas mkfs.ext4 -L   root    {$LOOP}p3
+run mkfs.vfat -F32 -n EFI  {$LOOP}p1
+run mkswap    -L   swap    {$LOOP}p2
+run mkfs.ext4 -L   root    {$LOOP}p3
 
 echo ""
 echo "Done. Loop device: $LOOP"
-echo "Detach when finished: doas losetup -d $LOOP"
+echo "Detach when finished: losetup -d $LOOP"
