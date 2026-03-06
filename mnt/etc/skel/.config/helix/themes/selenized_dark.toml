@@ -1,0 +1,151 @@
+# Selenized Dark — Helix theme
+# Palette: https://github.com/jan-warchol/selenized/blob/master/the-values.md
+
+# ── Syntax ────────────────────────────────────────────────────────────────────
+"attribute"                  = { fg = "violet" }
+"comment"                    = { fg = "dim_0", modifiers = ["italic"] }
+"comment.line"               = { fg = "dim_0", modifiers = ["italic"] }
+"comment.block"              = { fg = "dim_0", modifiers = ["italic"] }
+"constant"                   = { fg = "violet" }
+"constant.builtin"           = { fg = "violet", modifiers = ["bold"] }
+"constant.character.escape"  = { fg = "orange", modifiers = ["bold"] }
+"constant.numeric"           = { fg = "orange" }
+"constructor"                = { fg = "blue" }
+"function"                   = { fg = "blue" }
+"function.builtin"           = { fg = "blue", modifiers = ["bold"] }
+"function.macro"             = { fg = "magenta" }
+"function.special"           = { fg = "magenta" }
+"keyword"                    = { fg = "violet" }
+"keyword.control"            = { fg = "violet" }
+"keyword.control.import"     = { fg = "cyan" }
+"keyword.directive"          = { fg = "orange" }
+"keyword.operator"           = { fg = "cyan" }
+"label"                      = { fg = "green" }
+"module"                     = { fg = "cyan" }
+"namespace"                  = { fg = "cyan" }
+"operator"                   = { fg = "cyan" }
+"special"                    = { fg = "orange" }
+"string"                     = { fg = "green" }
+"string.regexp"              = { fg = "orange" }
+"string.special"             = { fg = "orange" }
+"tag"                        = { fg = "blue" }
+"tag.attribute"              = { fg = "yellow" }
+"type"                       = { fg = "yellow" }
+"type.builtin"               = { fg = "yellow", modifiers = ["bold"] }
+"variable"                   = { fg = "fg_0" }
+"variable.builtin"           = { fg = "cyan", modifiers = ["bold"] }
+"variable.function"          = { fg = "blue" }
+"variable.other.member"      = { fg = "fg_0" }
+"variable.parameter"         = { fg = "fg_0", modifiers = ["italic"] }
+
+# ── Markup ────────────────────────────────────────────────────────────────────
+"markup.heading"             = { fg = "blue", modifiers = ["bold"] }
+"markup.heading.marker"      = { fg = "dim_0" }
+"markup.list"                = { fg = "red" }
+"markup.bold"                = { fg = "fg_1", modifiers = ["bold"] }
+"markup.italic"              = { fg = "fg_1", modifiers = ["italic"] }
+"markup.strikethrough"       = { modifiers = ["crossed_out"] }
+"markup.link.url"            = { fg = "cyan", modifiers = ["underlined"] }
+"markup.link.text"           = { fg = "green" }
+"markup.quote"               = { fg = "cyan", modifiers = ["italic"] }
+"markup.raw"                 = { fg = "green" }
+"markup.raw.block"           = { fg = "green" }
+
+# ── Diff ──────────────────────────────────────────────────────────────────────
+"diff.plus"                  = { fg = "green" }
+"diff.delta"                 = { fg = "yellow" }
+"diff.minus"                 = { fg = "red" }
+"diff.plus.gutter"           = { fg = "green" }
+"diff.delta.gutter"          = { fg = "yellow" }
+"diff.minus.gutter"          = { fg = "red" }
+
+# ── Diagnostics ───────────────────────────────────────────────────────────────
+"warning"                    = { fg = "yellow", modifiers = ["bold"] }
+"error"                      = { fg = "red",    modifiers = ["bold"] }
+"info"                       = { fg = "blue",   modifiers = ["bold"] }
+"hint"                       = { fg = "dim_0",  modifiers = ["bold"] }
+
+"diagnostic.warning"         = { underline = { style = "curl", color = "yellow" } }
+"diagnostic.error"           = { underline = { style = "curl", color = "red"    } }
+"diagnostic.info"            = { underline = { style = "curl", color = "blue"   } }
+"diagnostic.hint"            = { underline = { style = "curl", color = "dim_0"  } }
+"diagnostic.unnecessary"     = { modifiers = ["dim"] }
+"diagnostic.deprecated"      = { modifiers = ["crossed_out"] }
+
+# ── UI ────────────────────────────────────────────────────────────────────────
+"ui.background"              = { bg = "bg_0" }
+"ui.background.separator"    = { fg = "bg_2" }
+
+"ui.cursor"                  = { fg = "bg_0",  bg = "cyan"  }
+"ui.cursor.primary"          = { fg = "bg_0",  bg = "fg_1"  }
+"ui.cursor.insert"           = { fg = "bg_0",  bg = "green" }
+"ui.cursor.select"           = { fg = "bg_0",  bg = "cyan"  }
+"ui.cursor.match"            = { fg = "bg_0",  bg = "yellow" }
+
+"ui.cursorline.primary"      = { bg = "bg_1" }
+"ui.cursorline.secondary"    = { bg = "bg_1" }
+
+"ui.selection"               = { bg = "bg_2" }
+"ui.selection.primary"       = { bg = "bg_2" }
+
+"ui.linenr"                  = { fg = "dim_0",  bg = "bg_1" }
+"ui.linenr.selected"         = { fg = "yellow", bg = "bg_1", modifiers = ["bold"] }
+
+"ui.statusline"              = { fg = "fg_0",  bg = "bg_2" }
+"ui.statusline.normal"       = { fg = "bg_0",  bg = "blue",   modifiers = ["bold"] }
+"ui.statusline.insert"       = { fg = "bg_0",  bg = "green",  modifiers = ["bold"] }
+"ui.statusline.select"       = { fg = "bg_0",  bg = "yellow", modifiers = ["bold"] }
+"ui.statusline.inactive"     = { fg = "dim_0", bg = "bg_1" }
+"ui.statusline.separator"    = { fg = "bg_2" }
+
+"ui.popup"                   = { fg = "fg_0",  bg = "bg_1" }
+"ui.popup.info"              = { fg = "fg_1",  bg = "bg_2", modifiers = ["bold"] }
+
+"ui.menu"                    = { fg = "fg_0",  bg = "bg_1" }
+"ui.menu.selected"           = { fg = "bg_0",  bg = "blue" }
+"ui.menu.scroll"             = { fg = "dim_0", bg = "bg_1" }
+
+"ui.text"                    = { fg = "fg_0" }
+"ui.text.focus"              = { fg = "blue", modifiers = ["bold"] }
+"ui.text.inactive"           = { fg = "dim_0" }
+"ui.text.info"               = { fg = "fg_1", modifiers = ["bold"] }
+
+"ui.window"                  = { fg = "bg_2" }
+"ui.help"                    = { fg = "fg_0", bg = "bg_1" }
+
+"ui.highlight"               = { bg = "bg_2" }
+"ui.highlight.frameline"     = { bg = "bg_1" }
+
+"ui.virtual.whitespace"      = { fg = "bg_2" }
+"ui.virtual.indent-guide"    = { fg = "bg_2" }
+"ui.virtual.ruler"           = { bg = "bg_1" }
+"ui.virtual.inlay-hint"      = { fg = "dim_0", modifiers = ["italic"] }
+"ui.virtual.jump-label"      = { fg = "red",   modifiers = ["bold"] }
+"ui.virtual.wrap"            = { fg = "bg_2" }
+
+# ── Palette ───────────────────────────────────────────────────────────────────
+[palette]
+bg_0    = "#103c48"
+bg_1    = "#184956"
+bg_2    = "#2d5b69"
+dim_0   = "#72898f"
+fg_0    = "#adbcbc"
+fg_1    = "#cad8d9"
+
+red     = "#fa5750"
+green   = "#75b938"
+yellow  = "#dbb32d"
+blue    = "#4695f7"
+magenta = "#f275be"
+cyan    = "#41c7b9"
+orange  = "#ed8649"
+violet  = "#af88eb"
+
+br_red     = "#ff665c"
+br_green   = "#84c747"
+br_yellow  = "#ebc13d"
+br_blue    = "#58a3ff"
+br_magenta = "#ff84cd"
+br_cyan    = "#53d6c7"
+br_orange  = "#fd9456"
+br_violet  = "#bd96fa"
