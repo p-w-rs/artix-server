@@ -1,0 +1,35 @@
+#!/usr/bin/env fish
+
+# setup-fish.fish — runs INSIDE the chroot.
+# Installs Fisher and all plugins listed in /tmp/fish-plugins globally.
+#
+# fisher_path=/etc/fish installs plugins into the system fish directories
+# (/etc/fish/functions, /etc/fish/completions, /etc/fish/conf.d) so they
+# are available to every user without any per-user setup.
+#
+# To add or remove plugins: edit custom-files/tmp/fish-plugins.
+# Each line is a fisher plugin identifier (e.g. owner/repo or owner/repo@tag).
+
+set FISHER_FUNC  /etc/fish/functions/fisher.fish
+set FISHER_URL   https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish
+set PLUGS        kidonng/zoxide.fish givensuman/fish-eza PatrickF1/fzf.fish jorgebucaran/autopair.fish franciscolourenco/done IlanCosman/tide@v6
+
+echo "=== Fish Shell Setup ==="
+
+# Install Fisher into the system functions directory
+echo ">>> Downloading Fisher..."
+curl -sfL $FISHER_URL -o $FISHER_FUNC; or begin; echo "ERROR: curl failed"; exit 1; end
+
+# fisher_path tells Fisher where to write functions/completions/conf.d.
+# We set it to /etc/fish so installs are system-wide, then source fisher
+# to make it available in this session.
+set -g fisher_path /etc/fish
+source $FISHER_FUNC
+
+echo ">>> Installing plugins..."
+for plugin in $PLUGS
+    echo "  $plugin"
+    fisher install $plugin; or begin; echo "ERROR: $plugin failed"; exit 1; end
+end
+
+echo ">>> setup-fish done."

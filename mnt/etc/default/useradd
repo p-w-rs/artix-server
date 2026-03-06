@@ -1,0 +1,13 @@
+# /etc/default/useradd — default settings for new users
+# These apply when running: useradd -m <username>
+# The admin user created at install time uses these too,
+# but is additionally added to wheel (sudo) explicitly.
+
+SHELL=/usr/bin/fish
+GROUP=users
+EXTRA_GROUPS="audio video cdrom optical lp scanner network storage plugdev input dialout bluetooth"
+HOME=/home
+INACTIVE=-1
+EXPIRE=
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=no

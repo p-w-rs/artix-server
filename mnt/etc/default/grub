@@ -1,0 +1,82 @@
+# /etc/default/grub
+# Read by grub-mkconfig; apply with: grub-mkconfig -o /boot/grub/grub.cfg
+
+# ── Boot menu ─────────────────────────────────────────────────────────────────
+# GRUB_TIMEOUT=0  → skip menu, boot immediately.
+# Set to -1 to wait indefinitely, or a positive number to show the menu.
+GRUB_DEFAULT=0
+GRUB_TIMEOUT=0
+GRUB_DISTRIBUTOR="PowersLabs"
+
+# Save the last booted entry so GRUB_DEFAULT=saved works across reboots.
+GRUB_SAVEDEFAULT=true
+
+# Suppress recovery entries in the menu.
+GRUB_DISABLE_RECOVERY=true
+GRUB_DISABLE_LINUX_RECOVERY=true
+
+# Skip probing for other OSes on other disks (saves a second or two at boot).
+GRUB_DISABLE_OS_PROBER=true
+
+# ── Platform ──────────────────────────────────────────────────────────────────
+GRUB_PLATFORM=efi
+
+# ── Kernel command line ───────────────────────────────────────────────────────
+# AppArmor
+#   apparmor=1 security=apparmor  — activate AppArmor LSM at boot
+#
+# Networking
+#   net.ifnames=0                 — use legacy ethX NIC naming (eth0, wlan0…)
+#
+# Performance / latency
+#   mitigations=off               — disable CPU vuln mitigations (Spectre etc.)
+#   nowatchdog                    — disable hardware watchdog
+#   threadirqs                    — force interrupt handlers onto threads
+#
+# Boot speed / silence
+#   quiet                         — suppress kernel log spam during boot
+#   loglevel=0                    — only show kernel panics; everything else goes
+#                                   to ring buffer only (readable via dmesg)
+#   rd.udev.log_level=0           — silence udev during initramfs (early boot,
+#                                   where bluetooth firmware warnings appear)
+#   udev.log_level=0              — silence udev in userspace
+#   elevator=none                 — skip legacy I/O scheduler; let the kernel's
+#                                   per-queue default handle it (best for NVMe/SSD)
+#   pcie_aspm=off                 — disable PCIe power saving negotiation at boot
+#                                   (removes a stall on some hardware)
+#
+# NVIDIA
+#   nvidia_drm.modeset=1          — enable kernel modesetting for the NVIDIA DRM
+#                                   driver; required for proper suspend/resume
+#
+GRUB_CMDLINE_LINUX_DEFAULT="apparmor=1 security=apparmor net.ifnames=0 mitigations=off nowatchdog threadirqs quiet loglevel=0 rd.udev.log_level=0 udev.log_level=0 elevator=none pcie_aspm=off nvidia_drm.modeset=1"
+GRUB_CMDLINE_LINUX=""
+
+# ── Terminal ──────────────────────────────────────────────────────────────────
+# Use the console (text) terminal for both input and output.
+# This disables the graphical/theme terminal — comment out GRUB_TERMINAL_OUTPUT
+# and uncomment GRUB_THEME below if you want the graphical theme instead.
+GRUB_TERMINAL_INPUT=console
+GRUB_TERMINAL_OUTPUT=console
+
+# ── Appearance (console mode) ─────────────────────────────────────────────────
+# Colors use GRUB's 16-color palette, chosen to approximate Selenized Dark:
+#
+#   Selenized Dark → GRUB name
+#   bg_0  #103c48  → black       (terminal background)
+#   fg_1  #adbcbc  → light-gray  (primary text)
+#   blue  #4695f7  → light-blue  (normal entry foreground)
+#   cyan  #41c7b9  → light-cyan  (highlight foreground — selenized teal)
+#
+# Format: foreground/background
+export GRUB_COLOR_NORMAL="light-blue/black"
+export GRUB_COLOR_HIGHLIGHT="light-cyan/blue"
+
+# ── Graphical terminal (disabled — requires GRUB_TERMINAL_OUTPUT=gfxterm) ─────
+# Uncomment the block below and comment out the GRUB_TERMINAL_OUTPUT=console
+# line above to switch to the graphical terminal with theme/background support.
+#
+#GRUB_GFXMODE="1920x1080,1024x768,800x600"
+#GRUB_GFXPAYLOAD_LINUX=keep
+#GRUB_THEME="/usr/share/grub/themes/artix/theme.txt"
+#GRUB_BACKGROUND="/path/to/wallpaper"

@@ -2,7 +2,7 @@
 
 # mkimg.fish — create and partition a raw disk image for Linux.
 # Attaches a loop device, writes GPT (EFI + swap + root), formats all three.
-# Output: void.img attached at a loop device (printed at the end).
+# Output: linux.img attached at a loop device (printed at the end).
 #
 # To adjust image or partition sizes, edit the variables below.
 # After this script: run install-pkgs, then run-chroot.

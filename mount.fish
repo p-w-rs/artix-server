@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-# mount.fish — mount a partitioned Void Linux disk under /mnt.
+# mount.fish — mount a partitioned Linux disk under /mnt.
 # Mounts root → /mnt, EFI → /mnt/boot/efi, and enables swap.
 #
 # Usage: ./mount.fish <device>

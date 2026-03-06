@@ -1,3 +1,3 @@
 #!/usr/bin/env fish
 
-basestrap /mnt openssh openssh-dinit connman connman-dinit apparmor apparmor-dinit nftables nftables-dinit bluez bluez-dinit
+basestrap /mnt openssh openssh-dinit connman connman-dinit apparmor apparmor-dinit nftables nftables-dinit bluez bluez-dinit cronie cronie-dinit
