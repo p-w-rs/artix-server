@@ -4,7 +4,7 @@
 
 set DIR (dirname (status filename))
 
-set BASE_PACKAGES base base-devel dinit fish
+set BASE_PACKAGES base base-devel grub efibootmgr dinit fish
 set PACKAGES linux linux-firmware linux-headers linux-firmware linux-firmware-intel linux-firmware-nvidia
 
 for script in $DIR/*.fish
