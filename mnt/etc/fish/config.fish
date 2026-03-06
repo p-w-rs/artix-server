@@ -14,10 +14,10 @@ fish_add_path /opt/bin
 fish_add_path /usr/local/bin
 
 # ── Editor / Pager ────────────────────────────────────────────────────────────
-set -gx EDITOR   nvim
-set -gx VISUAL   nvim
-set -gx MANPAGER "nvim +Man!"   # Neovim man pages with syntax highlighting
+set -gx EDITOR   helix
+set -gx VISUAL   helix
 set -gx PAGER    less
+set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
 
 # ── Selenized Dark — terminal color palette reference ─────────────────────────
 #
