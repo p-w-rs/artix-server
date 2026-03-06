@@ -20,6 +20,7 @@ chmod 600 /etc/nftables.conf
 echo ""
 echo ">>> Set ROOT password:"
 run passwd root
+chsh -s /usr/bin/fish root
 
 # Admin user
 # wheel is added explicitly here so plain 'useradd -m <name>' later won't get sudo
