@@ -13,9 +13,6 @@
 # Always request color output (safe — bat detects TTY and disables when piped).
 --color=always
 
-# Italic text for comments and doc-strings (requires terminal support).
---italic-text=always
-
 # Use a sensible pager. -R passes ANSI colors through; -F quits if output fits
 # on one screen; -X avoids clearing the screen on exit.
 --pager="less -RFX"

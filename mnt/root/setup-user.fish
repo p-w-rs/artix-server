@@ -28,6 +28,8 @@ read -P ">>> Admin username: " ADMIN_USER
 run useradd -m -G wheel $ADMIN_USER
 echo ">>> Set password for $ADMIN_USER:"
 run passwd $ADMIN_USER
+# Build bat theme cache for the new user
+sudo -u $ADMIN_USER BAT_CONFIG_DIR=/etc/bat bat cache --build
 
 echo ""
 echo ">>> Done."
