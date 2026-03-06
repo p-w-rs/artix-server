@@ -1,10 +1,8 @@
 #!/usr/bin/env fish
 
-# CUDA Environment Variables
-# Configure CUDA paths and libraries
-if test -d /usr/local/cuda
-    set -gx CUDA_HOME       /usr/local/cuda
-    set -gx PATH            /usr/local/cuda/bin $PATH
-    set -gx LD_LIBRARY_PATH /usr/local/cuda/lib64 $LD_LIBRARY_PATH
-    set -gx CUDNN_PATH      $CUDA_HOME
+# CUDA — supplement /etc/profile.d/cuda.sh (handles PATH and CUDA_PATH).
+# Only set what fish won't pick up from the profile.d script.
+if test -d /opt/cuda
+    set -gx CUDNN_PATH      /opt/cuda
+    set -gx LD_LIBRARY_PATH /opt/cuda/lib64 $LD_LIBRARY_PATH
 end
