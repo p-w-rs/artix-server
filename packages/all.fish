@@ -12,4 +12,6 @@ for script in $DIR/*.fish
     source $script
 end
 
+echo "installing $BASE_PACKAGES $PACKAGES\n\n"
+
 basestrap /mnt $BASE_PACKAGES $PACKAGES
