@@ -28,6 +28,7 @@ chsh -s /usr/bin/fish root
 # wheel is added explicitly here so plain 'useradd -m <name>' later won't get sudo
 echo ""
 read -P ">>> Admin username: " ADMIN_USER
+rm /etc/skel/.*
 run useradd -m -G wheel $ADMIN_USER
 echo ">>> Set password for $ADMIN_USER:"
 run passwd $ADMIN_USER
