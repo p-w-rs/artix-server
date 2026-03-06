@@ -16,10 +16,6 @@ echo ">>> Hardening permissions..."
 chmod 440 /etc/sudoers.d/wheel
 chmod 600 /etc/nftables.conf
 
-echo ">>> Clearing skel and root home..."
-rm -rf /etc/skel/.*  /etc/skel/*
-rm -rf /root/.*
-
 echo ""
 echo ">>> Set ROOT password:"
 run passwd root
