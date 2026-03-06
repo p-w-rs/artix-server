@@ -13,7 +13,9 @@ hwclock --systohc
 locale-gen
 
 echo ">>> Hardening permissions..."
-chmod 440 /etc/sudoers.d/wheel
+chmod 440 /etc/sudoers.d/u_root
+chmod 440 /etc/sudoers.d/g_wheel
+chmod 440 /etc/sudoers
 chmod 600 /etc/nftables.conf
 
 echo ""
