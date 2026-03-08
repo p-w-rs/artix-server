@@ -4,7 +4,7 @@
 
 DIR="$(dirname "$0")"
 
-BASE_PACKAGES="base base-devel grub efibootmgr dinit fish"
+BASE_PACKAGES="base base-devel dinit"
 PACKAGES="linux linux-firmware linux-headers linux-firmware linux-firmware-intel linux-firmware-nvidia"
 
 for script in "$DIR"/*.sh; do
