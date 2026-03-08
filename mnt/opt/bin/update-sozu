@@ -1,4 +1,4 @@
-#!/usr/bin/env fish
+#!/bin/bash
 # update-sozu — Install or update sōzu HTTP reverse proxy
 #
 # Builds from source using cargo and links the sozu dinit service.
@@ -6,15 +6,15 @@
 #
 # sozu:  /opt/sozu/target/release/sozu  → /opt/bin/sozu
 
-set SOZU_DIR    /opt/sozu
-set BIN_DIR     /opt/bin
-set SERVICE_SRC /etc/dinit.d/sozu
-set BOOT_DIR    /etc/dinit.d/boot.d
+SOZU_DIR=/opt/sozu
+BIN_DIR=/opt/bin
+SERVICE_SRC=/etc/dinit.d/sozu
+BOOT_DIR=/etc/dinit.d/boot.d
 
-if test (id -u) -ne 0
+if [ "$(id -u)" -ne 0 ]; then
     echo "ERROR: update-sozu must be run as root (use sudo)."
     exit 1
-end
+fi
 
 # ─────────────────────────────────────────
 #  Source
@@ -22,22 +22,22 @@ end
 
 echo "=== sōzu ==="
 
-if test -d $SOZU_DIR/.git
+if [ -d "$SOZU_DIR/.git" ]; then
     echo "  Updating existing clone..."
-    git -C $SOZU_DIR pull --ff-only
+    git -C "$SOZU_DIR" pull --ff-only
 else
     echo "  Cloning sozu..."
-    git clone https://github.com/sozu-proxy/sozu $SOZU_DIR
-end
+    git clone https://github.com/sozu-proxy/sozu "$SOZU_DIR"
+fi
 
 # ─────────────────────────────────────────
 #  Build
 # ─────────────────────────────────────────
 
 echo "  Building (cargo build --release)..."
-cargo build --release --locked --manifest-path $SOZU_DIR/Cargo.toml
+cargo build --release --locked --manifest-path "$SOZU_DIR/Cargo.toml"
 
-ln -sf $SOZU_DIR/target/release/sozu $BIN_DIR/sozu
+ln -sf "$SOZU_DIR/target/release/sozu" "$BIN_DIR/sozu"
 echo "  Symlinked: $BIN_DIR/sozu → $SOZU_DIR/target/release/sozu"
 
 # ─────────────────────────────────────────
@@ -46,10 +46,10 @@ echo "  Symlinked: $BIN_DIR/sozu → $SOZU_DIR/target/release/sozu"
 
 mkdir -p /etc/sozu /run/sozu /var/lib/sozu
 
-if not test -f /etc/sozu/config.toml
+if [ ! -f /etc/sozu/config.toml ]; then
     echo "  WARNING: /etc/sozu/config.toml not found."
     echo "  The file should have been seeded by the ISO — check mnt/etc/sozu/."
-end
+fi
 
 # ─────────────────────────────────────────
 #  dinit service
@@ -58,15 +58,15 @@ end
 echo ""
 echo "=== Service ==="
 
-if not test -f $SERVICE_SRC
+if [ ! -f "$SERVICE_SRC" ]; then
     echo "  WARNING: $SERVICE_SRC not found — service not enabled."
     echo "  Create a dinit service file at $SERVICE_SRC, then re-run."
-else if test -L $BOOT_DIR/sozu
+elif [ -L "$BOOT_DIR/sozu" ]; then
     echo "  sozu service already enabled."
 else
-    ln -s $SERVICE_SRC $BOOT_DIR/sozu
+    ln -s "$SERVICE_SRC" "$BOOT_DIR/sozu"
     echo "  Enabled: $BOOT_DIR/sozu → $SERVICE_SRC"
-end
+fi
 
 # ─────────────────────────────────────────
 #  Done
@@ -74,7 +74,7 @@ end
 
 echo ""
 echo "=== Done ==="
-echo "  sozu:    "(which sozu)
+echo "  sozu:    $(which sozu)"
 echo "  config:  /etc/sozu/config.toml"
 echo "  status:  dinitctl status sozu"
 echo ""

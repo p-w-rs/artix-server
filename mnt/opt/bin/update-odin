@@ -1,20 +1,20 @@
-#!/usr/bin/env fish
+#!/bin/bash
 # update-odin — Install or update Odin and OLS (Odin Language Server)
 #
 # Fresh install: clones both repos, builds, and symlinks binaries
 # Update:        pulls latest, rebuilds, symlinks are already in place
 #
-# Odin:  /opt/odin   → /usr/local/bin/odin
-# OLS:   /opt/ols    → /usr/local/bin/ols
+# Odin:  /opt/odin   → /opt/bin/odin
+# OLS:   /opt/ols    → /opt/bin/ols
 
-set ODIN_DIR /opt/odin
-set OLS_DIR  /opt/ols
-set BIN_DIR  /opt/bin
+ODIN_DIR=/opt/odin
+OLS_DIR=/opt/ols
+BIN_DIR=/opt/bin
 
-if test (id -u) -ne 0
+if [ "$(id -u)" -ne 0 ]; then
     echo "ERROR: update-odin must be run as root (use sudo)."
     exit 1
-end
+fi
 
 # ─────────────────────────────────────────
 #  Odin
@@ -22,20 +22,20 @@ end
 
 echo "=== Odin ==="
 
-if test -d $ODIN_DIR/.git
+if [ -d "$ODIN_DIR/.git" ]; then
     echo "  Updating existing clone..."
-    git -C $ODIN_DIR pull --ff-only
+    git -C "$ODIN_DIR" pull --ff-only
 else
     echo "  Cloning Odin..."
-    git clone https://github.com/odin-lang/Odin $ODIN_DIR
-end
+    git clone https://github.com/odin-lang/Odin "$ODIN_DIR"
+fi
 
 echo "  Building (make release-native)..."
-make -C $ODIN_DIR release-native
+make -C "$ODIN_DIR" release-native
 
-ln -sf $ODIN_DIR/odin $BIN_DIR/odin
+ln -sf "$ODIN_DIR/odin" "$BIN_DIR/odin"
 echo "  Symlinked: $BIN_DIR/odin → $ODIN_DIR/odin"
-echo "  Odin version: "(eval $ODIN_DIR/odin version)
+echo "  Odin version: $("$ODIN_DIR/odin" version)"
 
 # ─────────────────────────────────────────
 #  OLS (Odin Language Server)
@@ -44,18 +44,18 @@ echo "  Odin version: "(eval $ODIN_DIR/odin version)
 echo ""
 echo "=== OLS ==="
 
-if test -d $OLS_DIR/.git
+if [ -d "$OLS_DIR/.git" ]; then
     echo "  Updating existing clone..."
-    git -C $OLS_DIR pull --ff-only
+    git -C "$OLS_DIR" pull --ff-only
 else
     echo "  Cloning OLS..."
-    git clone https://github.com/DanielGavin/ols $OLS_DIR
-end
+    git clone https://github.com/DanielGavin/ols "$OLS_DIR"
+fi
 
 echo "  Building OLS..."
-ODIN_ROOT=$ODIN_DIR bash -c "cd $OLS_DIR && bash build.sh"
+ODIN_ROOT="$ODIN_DIR" bash -c "cd '$OLS_DIR' && bash build.sh"
 
-ln -sf $OLS_DIR/ols $BIN_DIR/ols
+ln -sf "$OLS_DIR/ols" "$BIN_DIR/ols"
 echo "  Symlinked: $BIN_DIR/ols → $OLS_DIR/ols"
 
 # ─────────────────────────────────────────
@@ -64,7 +64,7 @@ echo "  Symlinked: $BIN_DIR/ols → $OLS_DIR/ols"
 
 echo ""
 echo "=== Done ==="
-echo "  odin: "(which odin)" — "(odin version)
-echo "  ols:  "(which ols)
+echo "  odin: $(which odin) — $(odin version)"
+echo "  ols:  $(which ols)"
 echo ""
 echo "  Run 'sudo update-odin' at any time to update both."
