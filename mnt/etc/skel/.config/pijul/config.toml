@@ -1,4 +1,26 @@
 [author]
-name = "powerslabs"
-full_name = "Joshua Powers"
+name = "p-w-rs"
+full_name = "Powers, Joshua"
 email = "joshua@powerslabs.org"
+
+[colors]
+# "auto" uses color when outputting to a terminal, plain otherwise
+untracked = "cyan"
+modified   = "yellow"
+added      = "green"
+removed    = "red"
+
+[ignore]
+# Global ignores (repo-level .ignore files also supported)
+# These are globs — same syntax as .gitignore
+patterns = [
+    ".DS_Store",
+    "*.swp",
+    "*.swo",
+    "Thumbs.db",
+    "__pycache__",
+    "*.pyc",
+    ".env",
+    "node_modules",
+    "target/",
+]

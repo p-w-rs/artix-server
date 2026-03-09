@@ -1,0 +1,89 @@
+# ─── Identity ────────────────────────────────────────────────────────────────
+[user]
+    name  = Powers, Joshua
+    email = joshua@powerslabs.org
+
+# ─── Core Behavior ───────────────────────────────────────────────────────────
+[core]
+    editor     = hx                      # Helix
+    autocrlf   = input                   # Commit LF, leave checkout alone
+    whitespace = fix
+    pager      = less -FRX
+
+# ─── Initialization ──────────────────────────────────────────────────────────
+[init]
+    defaultBranch = main
+
+# ─── Fetch / Pull / Push ─────────────────────────────────────────────────────
+[fetch]
+    prune     = true
+    pruneTags = true
+
+[pull]
+    rebase = true
+
+[push]
+    default         = current
+    autoSetupRemote = true
+
+# ─── Merge & Rebase ──────────────────────────────────────────────────────────
+[merge]
+    conflictstyle = zdiff3               # Richer conflict markers with base context
+
+[rebase]
+    autoSquash = true
+    autoStash  = true
+
+# ─── Diff ────────────────────────────────────────────────────────────────────
+[diff]
+    algorithm  = histogram
+    colorMoved = default
+
+# ─── Commit ──────────────────────────────────────────────────────────────────
+[commit]
+    verbose = true                       # Show diff inside Helix when committing
+
+# ─── Rerere ──────────────────────────────────────────────────────────────────
+[rerere]
+    enabled    = true
+    autoupdate = true
+
+# ─── Branch & Tag ────────────────────────────────────────────────────────────
+[branch]
+    sort = -committerdate
+
+[tag]
+    sort = -version:refname
+
+# ─── Log ─────────────────────────────────────────────────────────────────────
+[log]
+    date = relative
+
+[color]
+    ui = auto
+
+# ─── Credential Storage ──────────────────────────────────────────────────────
+[credential]
+    helper = store                       # Fine for Linux; swap for osxkeychain on Mac
+
+# ─── HTTP ────────────────────────────────────────────────────────────────────
+[http]
+    postBuffer = 524288000
+
+# ─── Aliases ─────────────────────────────────────────────────────────────────
+[alias]
+    st      = status -sb
+    co      = checkout
+    br      = branch
+    ci      = commit
+    cp      = cherry-pick
+    unstage = reset HEAD --
+    lg      = log --oneline --graph --decorate --all
+    last    = log -1 HEAD --stat
+    undo    = reset --soft HEAD~1
+    amend   = commit --amend --no-edit
+    pub     = push --set-upstream origin HEAD
+    aliases = config --get-regexp alias
+    recent  = branch --sort=-committerdate --format='%(refname:short)'
+    find    = log --all --oneline --grep
+    nuke    = !git reset --hard && git clean -fd
