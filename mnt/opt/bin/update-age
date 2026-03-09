@@ -1,0 +1,72 @@
+#!/bin/bash
+# update-age — Install or update age (file encryption tool)
+#
+# Builds from source using go and symlinks the binaries into /opt/bin.
+#
+# age:      /opt/age/age      → /opt/bin/age
+# age-keygen: /opt/age/age-keygen → /opt/bin/age-keygen
+#
+# Prerequisites: go, git
+
+AGE_DIR=/opt/age-src
+BIN_DIR=/opt/bin
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo "ERROR: update-age must be run as root (use sudo)."
+    exit 1
+fi
+
+# ─────────────────────────────────────────
+#  Preflight checks
+# ─────────────────────────────────────────
+
+for cmd in go git; do
+    if ! command -v "$cmd" &>/dev/null; then
+        echo "ERROR: '$cmd' is not installed. Install it and re-run."
+        exit 1
+    fi
+done
+
+mkdir -p "$BIN_DIR"
+
+# ─────────────────────────────────────────
+#  Source
+# ─────────────────────────────────────────
+
+echo "=== age ==="
+
+if [ -d "$AGE_DIR/.git" ]; then
+    echo "  Updating existing clone..."
+    git -C "$AGE_DIR" pull --ff-only
+else
+    echo "  Cloning age..."
+    git clone https://github.com/FiloSottile/age "$AGE_DIR"
+fi
+
+# ─────────────────────────────────────────
+#  Build
+# ─────────────────────────────────────────
+
+echo "  Building (go build)..."
+go build -C "$AGE_DIR" -o . filippo.io/age/cmd/age filippo.io/age/cmd/age-keygen
+
+for bin in age age-keygen; do
+    BUILT_BIN="$AGE_DIR/$bin"
+    if [ ! -f "$BUILT_BIN" ]; then
+        echo "ERROR: Build failed — $BUILT_BIN not found."
+        exit 1
+    fi
+    ln -sf "$BUILT_BIN" "$BIN_DIR/$bin"
+    echo "  Symlinked: $BIN_DIR/$bin → $BUILT_BIN"
+done
+
+# ─────────────────────────────────────────
+#  Done
+# ─────────────────────────────────────────
+
+echo ""
+echo "=== Done ==="
+echo "  age:       $(which age) — $(age --version)"
+echo "  age-keygen: $(which age-keygen) — $(age-keygen --version)"
+echo ""
+echo "  Run 'sudo update-age' at any time to update."
