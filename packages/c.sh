@@ -2,6 +2,6 @@
 
 LLVM="llvm llvm-libs clang lld compiler-rt openmp openmpi"
 GCC="gcc gdb gcc-libs libatomic libgcc libstdc++"
-MAKE="make cmake automake ninja meson pkg-config"
+MAKE="make cmake automake ninja meson pkg-config bazel bazelisk"
 LIBS="libuv boost boost-libs libinput libudev libevdev libconfig protobuf openssl"
 PACKAGES="$PACKAGES $LLVM $GCC $MAKE $LIBS"
