@@ -1,0 +1,71 @@
+#!/bin/bash
+# update-unison — Install or update Unison file synchronizer
+#
+# Fresh install: clones the repo, builds with make, and symlinks the binary
+# Update:        pulls latest, rebuilds, symlink is already in place
+#
+# Unison: /opt/unison/src/unison  → /opt/bin/unison
+#
+# Prerequisites: ocaml, ocaml-findlib, make, git
+
+UNISON_DIR=/opt/unison
+BIN_DIR=/opt/bin
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo "ERROR: update-unison must be run as root (use sudo)."
+    exit 1
+fi
+
+# ─────────────────────────────────────────
+#  Preflight checks
+# ─────────────────────────────────────────
+
+for cmd in ocaml make git; do
+    if ! command -v "$cmd" &>/dev/null; then
+        echo "ERROR: '$cmd' is not installed. Install it and re-run."
+        exit 1
+    fi
+done
+
+mkdir -p "$BIN_DIR"
+
+# ─────────────────────────────────────────
+#  Source
+# ─────────────────────────────────────────
+
+echo "=== Unison ==="
+
+if [ -d "$UNISON_DIR/.git" ]; then
+    echo "  Updating existing clone..."
+    git -C "$UNISON_DIR" pull --ff-only
+else
+    echo "  Cloning Unison..."
+    git clone https://github.com/bcpierce00/unison "$UNISON_DIR"
+fi
+
+# ─────────────────────────────────────────
+#  Build
+# ─────────────────────────────────────────
+
+echo "  Building (make)..."
+make -C "$UNISON_DIR"
+
+BUILT_BIN="$UNISON_DIR/src/unison"
+
+if [ ! -f "$BUILT_BIN" ]; then
+    echo "ERROR: Build failed — $BUILT_BIN not found."
+    exit 1
+fi
+
+ln -sf "$BUILT_BIN" "$BIN_DIR/unison"
+echo "  Symlinked: $BIN_DIR/unison → $BUILT_BIN"
+
+# ─────────────────────────────────────────
+#  Done
+# ─────────────────────────────────────────
+
+echo ""
+echo "=== Done ==="
+echo "  unison: $(which unison) — $(unison -version 2>/dev/null | head -1)"
+echo ""
+echo "  Run 'sudo update-unison' at any time to update."
