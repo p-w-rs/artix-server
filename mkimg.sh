@@ -1,16 +1,11 @@
 #!/bin/bash
 
-# Create and partition a raw disk image.
-# Attaches a loop device, writes GPT (EFI + swap + root), and formats all three.
-# Usage: ./mkimg.sh
-# Next steps: install-pkgs, then run-chroot.
-
 source "$(dirname "$0")/helpers/die.sh"
 
 MBCALC="$(dirname "$0")/helpers/mbcalc.sh"
 
 # ── Config ────────────────────────────────────────────────────────────────────
-IMG_FILE="linux.img"
+IMG_FILE="$(pwd)/linux.img"   # absolute path — required by losetup
 IMG_SIZE="64G"
 EFI_SIZE="100M"
 SWAP_SIZE="8G"
