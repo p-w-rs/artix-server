@@ -1,0 +1,5 @@
+SHELL=/bin/bash
+HOME=/home/joshua
+
+# Update ssh.powerslabs.org DNS record every hour
+0 * * * * /bin/bash /home/joshua/.config/bash/functions/ssh-powerslabs-dns-updater.sh
