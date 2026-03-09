@@ -1,0 +1,26 @@
+{
+  "base_keymap": "SublimeText",
+  "icon_theme": "JetBrains New UI Icons (Dark)",
+  "theme": {
+    "mode": "system",
+    "light": "Solarized Light",
+    "dark": "Solarized Dark",
+  },
+  "restore_on_startup": "empty_tab",
+  "telemetry": {
+    "metrics": false,
+    "diagnostics": false,
+  },
+  "collaboration_panel": { "dock": null, "button": false },
+  "terminal": { "dock": null, "button": false },
+  "agent": { "dock": null, "button": false, "enabled": false },
+  "edit_predictions": { "provider": "none" },
+
+  "ui_font_family": "FiraCode Nerd Font",
+  "ui_font_size": 16,
+  "buffer_font_family": "FiraCode Nerd Font",
+  "buffer_font_size": 15,
+
+  "show_whitespaces": "all",
+  "preferred_line_length": 120,
+}
