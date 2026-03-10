@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Python Configuration
 # Disable cache and bytecode generation for cleaner development
 export PYTHONDONTWRITEBYTECODE=1                  # Prevents .pyc files

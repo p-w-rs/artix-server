@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # eza / ls colors — Selenized Dark
 # EZA_COLORS extends LS_COLORS. Format: LS_COLORS codes, semicolon-separated.
 # We highlight directories, symlinks, executables, and git status in Selenized.

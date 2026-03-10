@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Make all .sh files in a directory tree executable.
 # Usage: mkexec.sh <directory>

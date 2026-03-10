@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Partition and format a physical disk. DESTRUCTIVE.
 # Writes GPT (EFI + swap + root) and formats all three.

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # fzf colors — mapped directly to Selenized Dark hex values.
 # fg/bg use the terminal palette; accent colors use truecolor.
 export FZF_DEFAULT_OPTS="\

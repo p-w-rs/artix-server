@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 LLVM="llvm llvm-libs clang lld compiler-rt openmp openmpi"
 GCC="gcc gdb gcc-libs libatomic libgcc libstdc++"

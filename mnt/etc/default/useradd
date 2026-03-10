@@ -3,7 +3,7 @@
 # The admin user created at install time uses these too,
 # but is additionally added to wheel (sudo) explicitly.
 
-SHELL=/usr/bin/fish
+SHELL=/usr/bin/bash
 GROUP=users
 EXTRA_GROUPS="audio video cdrom optical lp scanner network storage plugdev input dialout bluetooth"
 HOME=/home

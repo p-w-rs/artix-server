@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Source all configuration snippets
 if [[ -d "$HOME/.config/bash/conf.d" ]]; then
     for config_file in "$HOME/.config/bash/conf.d"/*.sh; do

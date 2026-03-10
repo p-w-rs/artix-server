@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Unmount the installed system and release the loop device (if any).
 # Usage: ./cleanup.sh <device>

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Runs INSIDE the chroot.
 # Installs GRUB (UEFI), generates grub.cfg, and enables dinit services.

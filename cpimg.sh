@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Write linux.img to a device and expand the root partition to fill it.
 # Usage: ./cpimg.sh <image> <device>

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Convert linux.img to a VM-compatible format.
 # Usage: ./cvimg.sh [image [output [format]]]

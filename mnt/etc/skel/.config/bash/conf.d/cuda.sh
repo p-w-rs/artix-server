@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # CUDA — supplement /etc/profile.d/cuda.sh (handles PATH and CUDA_PATH).
 if [[ -d "/opt/cuda" ]]; then
     export CUDNN_PATH="/opt/cuda"

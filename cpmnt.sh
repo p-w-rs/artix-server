@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Copy local ./mnt config tree into /mnt on the target system.
 

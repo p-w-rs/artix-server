@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Julia Configuration
 # Performance and development settings
 export JULIA_NUM_THREADS="auto"                     # Use all available cores

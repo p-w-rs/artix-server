@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Convert a human size (e.g. 100M, 4G, 512K) to plain megabytes.
 # Usage: mbcalc.sh <size>

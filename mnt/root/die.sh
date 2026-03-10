@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Provides two helpers for install scripts:
 #   die [msg]  — print error and exit 1

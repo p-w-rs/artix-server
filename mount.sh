@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Mount a partitioned Linux disk under /mnt.
 # Usage: ./mount.sh <device>
