@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Usage: update-ddns <hostname> <key> <secret>
+# Dynamic DNS updater via Mythic Beasts DNS API v2
+
+set -euo pipefail
+
+HOSTNAME="${1:?Usage: update-ddns <hostname> <key> <secret>}"
+KEY="${2:?Usage: update-ddns <hostname> <key> <secret>}"
+SECRET="${3:?Usage: update-ddns <hostname> <key> <secret>}"
+
+API_URL="https://ipv4.api.mythic-beasts.com/dns/v2/dynamic/${HOSTNAME}"
+CACHE_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/ddns-${HOSTNAME}-last-ip"
+
+# --- Get current public IP ---
+CURRENT_IP=$(curl -sf --max-time 10 https://ipv4.icanhazip.com | tr -d '[:space:]')
+if [[ -z "$CURRENT_IP" ]]; then
+    echo "$(date -Is) ERROR: Could not determine public IP" >&2
+    exit 1
+fi
+
+# --- Compare with cached IP ---
+LAST_IP=""
+if [[ -f "$CACHE_FILE" ]]; then
+    LAST_IP=$(cat "$CACHE_FILE")
+fi
+
+if [[ "$CURRENT_IP" == "$LAST_IP" ]]; then
+    exit 0
+fi
+
+# --- Update DNS record ---
+RESPONSE=$(curl -sf --max-time 10 \
+    -X POST "$API_URL" \
+    -d "username=${KEY}" \
+    -d "password=${SECRET}")
+
+echo "$(date -Is) Updated ${HOSTNAME}: ${LAST_IP:-<none>} -> ${CURRENT_IP} | API: ${RESPONSE}"
+echo "$CURRENT_IP" > "$CACHE_FILE"
