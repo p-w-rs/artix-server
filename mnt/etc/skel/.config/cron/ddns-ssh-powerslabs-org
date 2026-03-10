@@ -1,1 +1,1 @@
-*/15 * * * * joshua bash -c '. ~/.bash_profile && /opt/bin/update-ddns ssh.powerlabs.org "$SSH_POWERSLABS_KEY" "$SSH_POWERSLABS_SECRET"' >> /home/joshua/.local/share/ddns.log 2>&1
+*/15 * * * * joshua bash -c '. ~/.config/bash/conf.d/secrets.sh && /opt/bin/update-ddns ssh.powerlabs.org "$SSH_POWERSLABS_KEY" "$SSH_POWERSLABS_SECRET"' >> /home/joshua/.local/share/ddns.log 2>&1
