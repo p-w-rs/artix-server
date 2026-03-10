@@ -8,3 +8,5 @@ export FZF_DEFAULT_OPTS="\
   --color=info:#41c7b9,prompt:#4695f7,pointer:#f275be \
   --color=marker:#75b938,spinner:#fa5750,header:#72898f \
   --height=40% --layout=reverse --border --cycle"
+
+eval "$(fzf --bash)"
