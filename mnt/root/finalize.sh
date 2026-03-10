@@ -34,6 +34,9 @@ for svc in connmand sshd apparmor nftables bluetoothd cronie dbus; do
 done
 cd /
 
+# ── WORKSPACE mount ─────────────────────────────────────────────────────────────────
+mkdir -p /mnt/workspace
+
 # ── EFI mount ─────────────────────────────────────────────────────────────────
 if ! mountpoint -q /boot/efi; then
     echo ">>> Mounting EFI partition..."
