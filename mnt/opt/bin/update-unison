@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # update-unison — Install or update Unison file synchronizer
 #
 # Fresh install: clones the repo, builds with make, and symlinks the binary

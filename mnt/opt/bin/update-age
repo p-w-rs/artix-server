@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # update-age — Install or update age (file encryption tool)
 #
 # Builds from source using go and symlinks the binaries into /opt/bin.

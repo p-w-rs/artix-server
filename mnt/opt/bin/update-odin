@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # update-odin — Install or update Odin and OLS (Odin Language Server)
 #
 # Fresh install: clones both repos, builds, and symlinks binaries

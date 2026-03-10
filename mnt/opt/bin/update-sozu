@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # update-sozu — Install or update sōzu HTTP reverse proxy
 #
 # Builds from source using cargo and links the sozu dinit service.
