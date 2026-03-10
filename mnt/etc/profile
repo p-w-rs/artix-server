@@ -11,14 +11,21 @@ append_path () {
     esac
 }
 
+prepend_path () {
+    case ":$PATH:" in
+        *:"$1":*)
+            ;;
+        *)
+            PATH="${1}${PATH:+:$PATH}"
+    esac
+}
+
 # Append our default paths
-append_path '/opt/bin'
 append_path '/usr/local/sbin'
 append_path '/usr/local/bin'
 append_path '/usr/sbin'
 append_path '/usr/bin'
-append_path '/sbin'
-append_path '/bin'
+prepend_path '/opt/bin'
 
 # Force PATH to be environment
 export PATH
@@ -40,6 +47,7 @@ unset -v GLOBSORT
 
 # Unload our profile API functions
 unset -f append_path
+unset -f prepend_path
 
 # Source global bash config, when interactive but not posix or sh mode
 if test "$BASH" &&\

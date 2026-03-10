@@ -22,7 +22,6 @@ chmod 600 /etc/nftables.conf
 echo ""
 echo ">>> Set ROOT password:"
 run passwd root
-chsh -s /usr/bin/bash root
 
 echo ""
 read -p ">>> Admin username: " ADMIN_USER
