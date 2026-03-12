@@ -29,7 +29,7 @@ GRUB_FLAGS=(--target=x86_64-efi --efi-directory=/boot/efi
 # ── Dinit services ────────────────────────────────────────────────────────────
 echo ">>> Enabling dinit services..."
 cd /etc/dinit.d/boot.d/
-for svc in connmand sshd apparmor nftables bluetoothd cronie dbus; do
+for svc in connmand sshd apparmor nftables bluetoothd cronie dbus smbd nmbd; do
     ln -sf "../$svc" .
 done
 cd /
