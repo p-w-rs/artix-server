@@ -1,0 +1,40 @@
+term = xterm-256color
+
+# --- Fonts ---
+window-title-font-family = FantasqueSansM Nerd Font Mono
+font-family = FantasqueSansM Nerd Font Mono
+font-family-bold = FantasqueSansM Nerd Font Mono Bold
+font-family-italic = FantasqueSansM Nerd Font Mono Italic
+font-family-bold-italic = FantasqueSansM Nerd Font Mono Bold Italic
+font-synthetic-style = bold,italic,bold-italic
+font-size = 14
+font-thicken = true
+
+# --- Theme ---
+# Automatically picks light/dark variant based on system theme.
+# "auto" here means Ghostty will detect system dark/light mode.
+theme = dark:Selenized Dark,light:Selenized Light
+window-theme = system
+
+# --- Cursor ---
+cursor-style = bar
+cursor-style-blink = true
+cursor-click-to-move = true
+
+# --- Mouse ---
+mouse-hide-while-typing = true
+mouse-shift-capture = false
+
+# --- Shell ---
+shell-integration = detect
+shell-integration-features = true
+# Fix ghostty-terminfo SSH issues: propagate terminfo over SSH automatically
+# and fall back to a widely-supported TERM value on remote hosts.
+# You can also add `ssh-env` to pass $TERM_PROGRAM so remote tools know
+# they're inside Ghostty.
+shell-integration-features = true,ssh-terminfo,ssh-env
+command = /usr/bin/env bash
+
+# --- Window / Behavior ---
+working-directory = home
+quit-after-last-window-closed = true
