@@ -1,0 +1,1 @@
+/mnt/stuff 10.0.0.0/24(rw,sync,no_subtree_check,insecure,all_squash,anonuid=1000,anongid=1000)
