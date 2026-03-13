@@ -4,4 +4,4 @@
 LABEL=root          /                 ext4          defaults,relatime   0       1
 LABEL=EFI           /boot/efi         vfat          defaults,noatime    0       2
 LABEL=swap          none              swap          sw                  0       0
-LABEL=WORKSPACE     /mnt/workspace    ext4          defaults,relatime   0       2
+LABEL=STUFF         /mnt/stuff        ext4          rw,noatime,nodiratime,lazytime   0       2
